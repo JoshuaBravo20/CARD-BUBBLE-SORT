@@ -14,7 +14,6 @@ let cardArray = [];
 let symbolArray = [];
 
 let parentRow = document.querySelector("#parentRow");
-let sortedField = document.querySelector("#sortedField");
 let suits = ["&spades;", "&clubs;", "&hearts;", "&diams;"];
 let nums = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "K", "Q", "J"];
 
@@ -30,10 +29,15 @@ function drawCards() {
   let newUpS = document.createElement("span");
   let newDownS = document.createElement("span");
   let newCardNum = document.createElement("span");
+
+  let obj = {
+    number: nums[randomNum],
+    suits: suits[randomSuit],
+  };
   //ASIGNAR LOS VALORES ALEATORIOS A CADA PARTE DE LA CARTA
-  newUpS.innerHTML = suits[randomSuit];
-  newDownS.innerHTML = suits[randomSuit];
-  newCardNum.innerHTML = nums[randomNum];
+  newUpS.innerHTML = obj.suits;
+  newDownS.innerHTML = obj.suits;
+  newCardNum.innerHTML = obj.number;
   //AGREGAR LAS CLASES, PARA ESTRUCTURA Y DETALLES VISUALES
   newCard.classList.add("card", "animate__animated", "animate__bounceIn");
   cardBody.classList.add("card-body");
@@ -49,8 +53,8 @@ function drawCards() {
   col.appendChild(newCard);
   parentRow.appendChild(col);
   // CREAR ARRAY CON VALORES PARA ORDENAR
-  cardArray.push(newCardNum.innerHTML);
-  symbolArray.push(newUpS.innerHTML);
+  cardArray.push(obj);
+  console.log(cardArray);
 }
 
 // SE DIBUJA LA CANTIDAD QUE INGRESE EL USUARIO DESDE EL INPUT
@@ -74,13 +78,11 @@ sortBtn.addEventListener("click", () => {
   while (stop > 0) {
     let j = 0;
     while (j < stop) {
-      if (cardArray[j] > cardArray[j + 1]) {
+      if (cardArray[j].number > cardArray[j + 1].number) {
         let aux = cardArray[j];
         cardArray[j] = cardArray[j + 1];
         cardArray[j + 1] = aux;
       }
-      console.log(cardArray);
-      console.log(symbolArray);
       j++;
     }
     drawSorted();
@@ -90,37 +92,34 @@ sortBtn.addEventListener("click", () => {
 
 //FUNCION PARA DIBUJAR LOS ORDENADOS
 function drawSorted() {
-
   let newRow = document.createElement("div");
   newRow.classList.add("row");
   container.appendChild(newRow);
 
   for (let i = 0; i < cardArray.length; i++) {
-  
-  let newCard = document.createElement("div");
-  let cardBody = document.createElement("div");
-  let col = document.createElement("div");
-  let newUpS = document.createElement("span");
-  let newDownS = document.createElement("span");
-  let newCardNum = document.createElement("span");
+    let newCard = document.createElement("div");
+    let cardBody = document.createElement("div");
+    let col = document.createElement("div");
+    let newUpS = document.createElement("span");
+    let newDownS = document.createElement("span");
+    let newCardNum = document.createElement("span");
 
-  
-  newCard.classList.add("card", "animate__animated", "animate__bounceIn");
-  cardBody.classList.add("card-body");
-  col.classList.add("col");
-  newUpS.classList.add("up-suit");
-  newDownS.classList.add("down-suit");
-  newCardNum.classList.add("number");
+    newCard.classList.add("card", "animate__animated", "animate__bounceIn");
+    cardBody.classList.add("card-body");
+    col.classList.add("col");
+    newUpS.classList.add("up-suit");
+    newDownS.classList.add("down-suit");
+    newCardNum.classList.add("number");
 
-  cardBody.appendChild(newUpS);
-  cardBody.appendChild(newDownS);
-  cardBody.appendChild(newCardNum);
-  newCard.appendChild(cardBody);
-  col.appendChild(newCard);
-  newRow.appendChild(col);
+    cardBody.appendChild(newUpS);
+    cardBody.appendChild(newDownS);
+    cardBody.appendChild(newCardNum);
+    newCard.appendChild(cardBody);
+    col.appendChild(newCard);
+    newRow.appendChild(col);
 
-  newCardNum.innerHTML = cardArray[i];
-  newUpS.innerHTML = symbolArray[i];
-  newDownS.innerHTML = symbolArray[i];
+    newCardNum.innerHTML = cardArray[i].number;
+    newUpS.innerHTML = cardArray[i].suits;
+    newDownS.innerHTML = cardArray[i].suits;
   }
 }
