@@ -45,6 +45,10 @@ function drawCards() {
   newUpS.classList.add("up-suit");
   newDownS.classList.add("down-suit");
   newCardNum.classList.add("number");
+  if (obj.suits === '&hearts;' || obj.suits === '&diams;') {
+    newUpS.classList.add('reddo');
+    newDownS.classList.add('reddo');
+  }
   //ASIGNAR Y ESTRUCTURAR COMO SE GENERA LA CARTA EN EL DOM
   cardBody.appendChild(newUpS);
   cardBody.appendChild(newDownS);
@@ -121,5 +125,10 @@ function drawSorted() {
     newCardNum.innerHTML = cardArray[i].number;
     newUpS.innerHTML = cardArray[i].suits;
     newDownS.innerHTML = cardArray[i].suits;
+
+    if (cardArray[i].suits === '&hearts;' || cardArray[i].suits === '&diams;') {
+      newUpS.classList.add('reddo');
+      newDownS.classList.add('reddo');
+    }
   }
 }
